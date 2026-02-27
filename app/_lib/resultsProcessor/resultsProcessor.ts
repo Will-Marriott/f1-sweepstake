@@ -6,6 +6,7 @@ import {
   getPreviousSprintResults,
 } from "../jolpicaRequests/jolpicaRequests";
 import { JolpicaLastResultsResponse } from "../jolpicaRequests/types";
+import { sendDiscordNotification } from "../discordNotifier/discordNotifier";
 
 export const processLastResults = async () => {
   const previousRaceResultsResponse = await getPreviousRaceResults();
@@ -62,6 +63,10 @@ export const processLastResults = async () => {
       });
     }
   });
+
+  sendDiscordNotification(
+    `Race results processed for season ${raceInfo.season}, round ${raceInfo.round}.`,
+  );
 
   return {
     season: raceInfo.season,

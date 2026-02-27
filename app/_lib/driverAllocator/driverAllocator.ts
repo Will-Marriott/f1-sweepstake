@@ -4,6 +4,7 @@ import {
   getDriverStandings,
   getNextRaceInfo,
 } from "../jolpicaRequests/jolpicaRequests";
+import { sendDiscordNotification } from "../discordNotifier/discordNotifier";
 
 export type AllocateDriversOptions = {
   season?: number;
@@ -53,6 +54,10 @@ export const allocateDrivers = async (options?: AllocateDriversOptions) => {
 
   console.log(
     `Successfully allocated drivers for round ${nextRace.round} to ${playerAllocations.length} players.`,
+  );
+
+  sendDiscordNotification(
+    `Drivers allocated for season ${nextRace.season}, round ${nextRace.round}.`,
   );
 };
 
