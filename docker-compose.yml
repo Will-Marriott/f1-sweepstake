@@ -24,20 +24,19 @@ services:
       - ./docker/crontab:/etc/crontabs/root:ro
     command: crond -f -l 2
 
-  prisma-studio:
-    image: node:22-slim
+  sqlitebrowser:
+    image: lscr.io/linuxserver/sqlitebrowser:latest
     container_name: f1-sweepstake-db-gui
     restart: unless-stopped
-    working_dir: /usr/src/app
     ports:
-      - "5555:5555"
+      - "3001:3001"
     environment:
-      - DATABASE_URL=file:/data/f1-sweepstake.db
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
     volumes:
-      - ./prisma:/usr/src/app/prisma
-      - ./prisma.config.ts:/usr/src/app/prisma.config.ts
       - f1-data:/data
-    command: sh -c "npm install prisma@7.3.0 && npx prisma studio --config ./prisma.config.ts --port 5555 --browser none --hostname 0.0.0.0"
+    shm_size: "1gb"
     depends_on:
       - app
 
