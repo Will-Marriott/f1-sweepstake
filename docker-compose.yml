@@ -10,6 +10,7 @@ services:
     environment:
       - DATABASE_URL=file:/app/data/f1-sweepstake.db
       - NODE_ENV=production
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
     volumes:
       - f1-data:/app/data
 
