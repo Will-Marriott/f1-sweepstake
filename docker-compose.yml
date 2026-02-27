@@ -24,5 +24,15 @@ services:
       - ./docker/crontab:/etc/crontabs/root:ro
     command: crond -f -l 2
 
+  sqlite-web:
+    image: ghcr.io/nicholasgasior/docker-sqlite-web:latest
+    container_name: f1-sweepstake-db-gui
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - f1-data:/data
+    command: sqlite_web -H 0.0.0.0 -p 8080 /data/f1-sweepstake.db
+
 volumes:
   f1-data:
