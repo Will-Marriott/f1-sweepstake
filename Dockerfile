@@ -62,4 +62,4 @@ ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 # Run migrations (using isolated Prisma CLI) then start the server
-CMD ["sh", "-c", "/prisma-cli/node_modules/.bin/prisma migrate deploy --config ./prisma.config.ts && node server.js"]
+CMD ["sh", "-c", "NODE_PATH=/prisma-cli/node_modules /prisma-cli/node_modules/.bin/prisma migrate deploy --config ./prisma.config.ts && node server.js"]
