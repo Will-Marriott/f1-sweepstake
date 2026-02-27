@@ -51,10 +51,8 @@ COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 # Copy the generated Prisma client (needed by the standalone server)
 COPY --from=builder /app/app/generated ./app/generated
 
-# Install Prisma CLI and its dependencies for runtime migrations
-# Copy package.json so npm can resolve the correct version
-COPY --from=builder /app/package.json ./package.json
-RUN npm install --no-save prisma @prisma/engines --registry https://registry.npmjs.org
+# Install Prisma CLI for runtime migrations
+RUN rm -f /root/.npmrc && npm install --no-save prisma@7.3.0 --registry https://registry.npmjs.org
 
 EXPOSE 3000
 
