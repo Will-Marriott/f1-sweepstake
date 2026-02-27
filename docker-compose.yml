@@ -31,8 +31,8 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=0
+      - PGID=0
       - TZ=Europe/London
     volumes:
       - f1-data:/data
