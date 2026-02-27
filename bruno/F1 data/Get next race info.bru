@@ -1,0 +1,106 @@
+meta {
+  name: Get next race info
+  type: http
+  seq: 4
+}
+
+get {
+  url: https://api.jolpi.ca/ergast/f1/current/next/races/
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: EXAMPLE
+  
+  request: {
+    url: https://api.jolpi.ca/ergast/f1/current/next/races/
+    method: GET
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      server: nginx/1.28.0
+      date: Mon, 16 Feb 2026 17:51:55 GMT
+      content-type: application/json
+      transfer-encoding: chunked
+      connection: keep-alive
+      vary: Accept, origin
+      allow: GET, HEAD, OPTIONS
+      expires: Mon, 16 Feb 2026 18:51:55 GMT
+      cache-control: max-age=3600
+      x-frame-options: DENY
+      x-content-type-options: nosniff
+      referrer-policy: same-origin
+      cross-origin-opener-policy: same-origin
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "MRData": {
+            "xmlns": "",
+            "series": "f1",
+            "url": "https://api.jolpi.ca/ergast/f1/current/next/races/",
+            "limit": "30",
+            "offset": "0",
+            "total": "1",
+            "RaceTable": {
+              "season": "2026",
+              "round": "1",
+              "Races": [
+                {
+                  "season": "2026",
+                  "round": "1",
+                  "url": "https://en.wikipedia.org/wiki/2026_Australian_Grand_Prix",
+                  "raceName": "Australian Grand Prix",
+                  "Circuit": {
+                    "circuitId": "albert_park",
+                    "url": "https://en.wikipedia.org/wiki/Albert_Park_Circuit",
+                    "circuitName": "Albert Park Grand Prix Circuit",
+                    "Location": {
+                      "lat": "-37.8497",
+                      "long": "144.968",
+                      "locality": "Melbourne",
+                      "country": "Australia"
+                    }
+                  },
+                  "date": "2026-03-08",
+                  "time": "04:00:00Z",
+                  "FirstPractice": {
+                    "date": "2026-03-06",
+                    "time": "01:30:00Z"
+                  },
+                  "SecondPractice": {
+                    "date": "2026-03-06",
+                    "time": "05:00:00Z"
+                  },
+                  "ThirdPractice": {
+                    "date": "2026-03-07",
+                    "time": "01:30:00Z"
+                  },
+                  "Qualifying": {
+                    "date": "2026-03-07",
+                    "time": "05:00:00Z"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      '''
+    }
+  }
+}

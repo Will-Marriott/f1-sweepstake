@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+/* 
+run: 
+npx prisma studio --config ./prisma.config.ts 
+to see the database viewer 
+*/
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model SweepstakeGame {
+  id Int @id @default(autoincrement())
+  players Player[]
+  season Int
+  raceWeeks RaceWeek[]
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  name  String
+  players Player[]
+}
+
+model Player {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade) 
+  userId Int
+  sweepstakeGame SweepstakeGame @relation(fields: [sweepstakeGameId], references: [id], onDelete: Cascade)
+  sweepstakeGameId Int
+  raceWeekAllocations RaceWeekAllocation[]
+}
+
+model RaceWeek {
+  id Int @id @default(autoincrement())
+  sweepstakeGame SweepstakeGame @relation(fields: [sweepstakeGameId], references: [id], onDelete: Cascade)
+  sweepstakeGameId Int
+  round Int
+  circuitId String
+  isProcessed Boolean @default(false)
+  raceWeekAllocations RaceWeekAllocation[]
+}
+
+model RaceWeekAllocation {
+  id Int @id @default(autoincrement())
+  player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  playerId Int
+  raceWeek RaceWeek @relation(fields: [raceWeekId], references: [id], onDelete: Cascade)
+  raceWeekId Int
+  drivers Driver[]
+  pointsScored Int?
+}
+
+model Driver {
+  id Int @id @default(autoincrement())
+  driverFamilyName String @map("driverName")
+  driverId String
+  constructorName String
+  constructorId String
+  raceWeekAllocations RaceWeekAllocation[]
+}

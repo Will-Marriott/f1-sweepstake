@@ -1,0 +1,16 @@
+meta {
+  name: Process last results
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/api/process-last-results
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
