@@ -53,9 +53,7 @@ COPY --from=builder /app/app/generated ./app/generated
 
 # Copy node_modules needed for Prisma CLI migrations at runtime
 # (standalone doesn't include devDependencies like prisma CLI)
-COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=builder /app/node_modules/better-sqlite3 ./node_modules/better-sqlite3
+RUN npm install --no-save prisma@7.3.0
 
 # Copy entrypoint script
 COPY docker/entrypoint.sh ./entrypoint.sh
