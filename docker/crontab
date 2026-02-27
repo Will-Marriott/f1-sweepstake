@@ -1,0 +1,7 @@
+# Allocate drivers - every hour
+
+0 \* \* \* \* wget -qO- --post-data='' http://app:3000/api/allocate-drivers > /proc/1/fd/1 2>&1
+
+# Process results - every hour (offset by 30 minutes to avoid overlap)
+
+30 \* \* \* \* wget -qO- --post-data='' http://app:3000/api/process-last-results > /proc/1/fd/1 2>&1

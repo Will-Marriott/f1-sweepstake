@@ -1,0 +1,27 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: f1-sweepstake
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=file:/app/data/f1-sweepstake.db
+      - NODE_ENV=production
+    volumes:
+      - f1-data:/app/data
+
+  cron:
+    image: alpine:3.21
+    container_name: f1-sweepstake-cron
+    restart: unless-stopped
+    depends_on:
+      - app
+    volumes:
+      - ./docker/crontab:/etc/crontabs/root:ro
+    command: crond -f -l 2
+
+volumes:
+  f1-data:
