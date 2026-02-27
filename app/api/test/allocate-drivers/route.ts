@@ -1,4 +1,4 @@
-import { allocateDrivers } from "@/app/_lib/resultsProcessor/driverAllocator";
+import { allocateDrivers } from "@/app/_lib/driverAllocator/driverAllocator";
 
 /**
  * Test endpoint that runs driver allocation against a real past race.

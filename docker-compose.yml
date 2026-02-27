@@ -29,7 +29,7 @@ services:
     container_name: f1-sweepstake-db-gui
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "8083:8080"
     volumes:
       - f1-data:/data
     command: sqlite_web -H 0.0.0.0 -p 8080 /data/f1-sweepstake.db

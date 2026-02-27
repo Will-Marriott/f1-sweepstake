@@ -1,4 +1,4 @@
-import { allocateDrivers } from "../../_lib/resultsProcessor/driverAllocator";
+import { allocateDrivers } from "../../_lib/driverAllocator/driverAllocator";
 
 export async function POST() {
   return await allocateDrivers();
