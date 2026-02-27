@@ -24,16 +24,30 @@ services:
       - ./docker/crontab:/etc/crontabs/root:ro
     command: crond -f -l 2
 
-  sqlite-web:
-    image: adminer:latest
+  prisma-studio:
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: f1-sweepstake-db-gui
     restart: unless-stopped
     ports:
-      - "8084:8080"
-    volumes:
-      - f1-data:/data
+      - "5555:5555"
     environment:
-      - ADMINER_DEFAULT_SERVER=/data/f1-sweepstake.db
+      - DATABASE_URL=file:/app/data/f1-sweepstake.db
+    volumes:
+      - f1-data:/app/data
+    entrypoint:
+      [
+        "npx",
+        "prisma",
+        "studio",
+        "--config",
+        "./prisma.config.ts",
+        "--port",
+        "5555",
+        "--hostname",
+        "0.0.0.0",
+      ]
 
 volumes:
   f1-data:
