@@ -44,24 +44,22 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 
-# Copy Prisma schema and migrations for runtime migration
+# Copy Prisma schema, migrations and config for runtime migration
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 
 # Copy the generated Prisma client (needed by the standalone server)
 COPY --from=builder /app/app/generated ./app/generated
 
-# Copy node_modules needed for Prisma CLI migrations at runtime
-# (standalone doesn't include devDependencies like prisma CLI)
-RUN npm install --no-save prisma@7.3.0
-
-# Copy entrypoint script
-COPY docker/entrypoint.sh ./entrypoint.sh
-RUN chmod +x ./entrypoint.sh
+# Install Prisma CLI and its dependencies for runtime migrations
+# Copy package.json so npm can resolve the correct version
+COPY --from=builder /app/package.json ./package.json
+RUN npm install --no-save prisma @prisma/engines --registry https://registry.npmjs.org
 
 EXPOSE 3000
 
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-ENTRYPOINT ["./entrypoint.sh"]
+# Run migrations then start the server (per Prisma docs pattern)
+CMD ["sh", "-c", "npx prisma migrate deploy --config ./prisma.config.ts && node server.js"]

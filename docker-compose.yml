@@ -25,29 +25,22 @@ services:
     command: crond -f -l 2
 
   prisma-studio:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: node:22-slim
     container_name: f1-sweepstake-db-gui
     restart: unless-stopped
+    working_dir: /usr/src/app
     ports:
       - "5555:5555"
     environment:
-      - DATABASE_URL=file:/app/data/f1-sweepstake.db
+      - DATABASE_URL=file:/data/f1-sweepstake.db
     volumes:
-      - f1-data:/app/data
-    entrypoint:
-      [
-        "npx",
-        "prisma",
-        "studio",
-        "--config",
-        "./prisma.config.ts",
-        "--port",
-        "5555",
-        "--hostname",
-        "0.0.0.0",
-      ]
+      - ./prisma:/usr/src/app/prisma
+      - ./prisma.config.ts:/usr/src/app/prisma.config.ts
+      - ./package.json:/usr/src/app/package.json
+      - f1-data:/data
+    command: npx prisma studio --config ./prisma.config.ts --port 5555 --browser none --hostname 0.0.0.0
+    depends_on:
+      - app
 
 volumes:
   f1-data:
