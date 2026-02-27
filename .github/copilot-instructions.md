@@ -40,6 +40,27 @@ An F1 sweepstake tracker built with Next.js 16 (App Router), React 19, TypeScrip
 - Docs: https://github.com/jolpica/jolpica-f1/blob/main/docs/README.md
 - Used for: standings, race results, driver/team data
 
+## Database (Prisma + SQLite)
+
+- ORM: Prisma 7
+- Database: SQLite via Prisma datasource (`provider = "sqlite"`)
+- Prisma config file: `prisma.config.ts` (datasource URL comes from `DATABASE_URL`)
+- Prisma client output: `app/generated/prisma`
+- Runtime Prisma client and SQLite adapter setup: `app/_lib/prisma.ts`
+
+**Database URL:**
+
+- Use `DATABASE_URL` for all environments
+- Local fallback in code is `file:./dev.db` when `DATABASE_URL` is not set
+
+**Prisma commands:**
+
+```bash
+pnpm prisma:generate   # Generate Prisma client
+pnpm prisma:migrate    # Create/apply local migration
+pnpm prisma:studio     # Open Prisma Studio
+```
+
 ## Architecture
 
 ### Directory Structure
