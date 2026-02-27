@@ -1,4 +1,4 @@
-import { prisma } from "@/app/_lib/prisma";
+import { prisma } from "@/app/_lib/prisma/prisma";
 import Table from "./Table";
 
 async function DriverAllocationTable() {

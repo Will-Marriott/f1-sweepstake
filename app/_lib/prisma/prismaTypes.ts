@@ -1,4 +1,4 @@
-import type { Prisma } from "../generated/prisma/browser";
+import type { Prisma } from "../../generated/prisma/browser";
 
 export type RaceWeekAllocationWithDrivers =
   Prisma.RaceWeekAllocationGetPayload<{ include: { drivers: true } }>;

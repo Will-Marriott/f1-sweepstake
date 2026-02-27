@@ -1,11 +1,11 @@
-import type { RaceWeekAllocationWithDrivers } from "../prismaTypes";
-import { prisma } from "../prisma";
+import type { RaceWeekAllocationWithDrivers } from "../prisma/prismaTypes";
+import { prisma } from "../prisma/prisma";
 import axios from "axios";
 import {
   getPreviousRaceResults,
   getPreviousSprintResults,
-} from "./jolpicaRequests";
-import { JolpicaLastResultsResponse } from "./types";
+} from "../jolpicaRequests/jolpicaRequests";
+import { JolpicaLastResultsResponse } from "../jolpicaRequests/types";
 
 export const processLastResults = async () => {
   const previousRaceResultsResponse = await getPreviousRaceResults();

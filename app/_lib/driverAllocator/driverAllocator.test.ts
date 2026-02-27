@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { SweepstakeGameWithPlayersAndRaceWeeks } from "../prismaTypes";
+import type { SweepstakeGameWithPlayersAndRaceWeeks } from "../prisma/prismaTypes";
 
 type DriverRecord = {
   id: number;

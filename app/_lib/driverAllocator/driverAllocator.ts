@@ -1,6 +1,9 @@
-import { prisma } from "../prisma";
-import { SweepstakeGameWithPlayersAndRaceWeeks } from "../prismaTypes";
-import { getDriverStandings, getNextRaceInfo } from "./jolpicaRequests";
+import { prisma } from "../prisma/prisma";
+import { SweepstakeGameWithPlayersAndRaceWeeks } from "../prisma/prismaTypes";
+import {
+  getDriverStandings,
+  getNextRaceInfo,
+} from "../jolpicaRequests/jolpicaRequests";
 
 export type AllocateDriversOptions = {
   season?: number;
