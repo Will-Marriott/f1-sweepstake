@@ -25,7 +25,7 @@ services:
     command: crond -f -l 2
 
   sqlite-web:
-    image: ghcr.io/nicholasgasior/docker-sqlite-web:latest
+    image: coleifer/sqlite-web:latest
     container_name: f1-sweepstake-db-gui
     restart: unless-stopped
     ports:
