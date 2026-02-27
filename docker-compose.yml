@@ -29,7 +29,7 @@ services:
     container_name: f1-sweepstake-db-gui
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "8084:8080"
     volumes:
       - f1-data:/data
     environment:
