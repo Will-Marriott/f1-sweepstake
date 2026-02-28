@@ -22,6 +22,7 @@ async function DriverAllocationTable() {
 
   return (
     <Table
+      title="Drivers"
       tableData={allocationTableData || []}
       columns={[
         { key: "playerName", label: "Player" },

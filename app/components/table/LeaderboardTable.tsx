@@ -18,6 +18,7 @@ async function LeaderboardTable() {
 
   return (
     <Table
+      title="Leaderboard"
       tableData={leaderboardData}
       columns={[
         { key: "playerName", label: "Player" },

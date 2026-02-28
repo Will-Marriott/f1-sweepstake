@@ -6,14 +6,17 @@ type Table<T> = {
 function Table<T extends object>({
   tableData,
   columns,
+  title,
 }: {
   tableData: T[];
   columns: Table<T>[];
+  title?: string;
 }) {
   if (tableData.length === 0) return <div>No data</div>;
 
   return (
     <div className="w-full h-fit">
+      {title && <h2 className="font-bold">{title}</h2>}
       <table className="w-full">
         <thead>
           <tr>
