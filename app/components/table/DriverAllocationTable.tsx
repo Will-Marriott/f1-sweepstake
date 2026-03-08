@@ -8,6 +8,7 @@ async function DriverAllocationTable() {
         include: { drivers: true, player: { include: { user: true } } },
       },
     },
+    orderBy: { round: "desc" },
   });
 
   const allocationTableData = raceWeek?.raceWeekAllocations
