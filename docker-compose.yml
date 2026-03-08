@@ -13,6 +13,9 @@ services:
       - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
     volumes:
       - f1-data:/app/data
+    networks:
+      - proxy
+      - default
 
   cron:
     image: alpine:3.21
@@ -42,3 +45,7 @@ services:
 
 volumes:
   f1-data:
+
+networks:
+  proxy:
+    external: true
