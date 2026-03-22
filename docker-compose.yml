@@ -1,28 +1,25 @@
 services:
-  app:
+  f1-sweepstake:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: f1-sweepstake
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "3002:3000"
     environment:
       - DATABASE_URL=file:/app/data/f1-sweepstake.db
       - NODE_ENV=production
       - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
     volumes:
       - f1-data:/app/data
-    networks:
-      - proxy
-      - default
 
   cron:
     image: alpine:3.21
     container_name: f1-sweepstake-cron
     restart: unless-stopped
     depends_on:
-      - app
+      - f1-sweepstake
     volumes:
       - ./docker/crontab:/etc/crontabs/root:ro
     command: crond -f -l 2
@@ -41,11 +38,7 @@ services:
       - f1-data:/data
     shm_size: "1gb"
     depends_on:
-      - app
+      - f1-sweepstake
 
 volumes:
   f1-data:
-
-networks:
-  proxy:
-    external: true
