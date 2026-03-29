@@ -46,7 +46,20 @@ export const processLastResults = async () => {
     };
   }
 
-  const driverAllocations = raceWeeksForRound.flatMap(
+  const unprocessedRaceWeeks = raceWeeksForRound.filter(
+    (raceWeek) => !raceWeek.isProcessed,
+  );
+  if (unprocessedRaceWeeks.length === 0) {
+    return {
+      season: raceInfo.season,
+      round: raceInfo.round,
+      processedRaceWeeks: 0,
+      updatedAllocations: 0,
+      message: "All race weeks for this round have already been processed.",
+    };
+  }
+
+  const driverAllocations = unprocessedRaceWeeks.flatMap(
     (raceWeek) => raceWeek.raceWeekAllocations,
   );
 
@@ -62,16 +75,22 @@ export const processLastResults = async () => {
         data: { pointsScored: allocation.pointsScored },
       });
     }
+    for (const raceWeek of unprocessedRaceWeeks) {
+      await tx.raceWeek.update({
+        where: { id: raceWeek.id },
+        data: { isProcessed: true },
+      });
+    }
   });
 
-  sendDiscordNotification(
+  await sendDiscordNotification(
     `Race results processed for season ${raceInfo.season}, round ${raceInfo.round}.`,
   );
 
   return {
     season: raceInfo.season,
     round: raceInfo.round,
-    processedRaceWeeks: raceWeeksForRound.length,
+    processedRaceWeeks: unprocessedRaceWeeks.length,
     updatedAllocations: allocationsWithPointsAdded.length,
     message: "Successfully processed race results.",
   };

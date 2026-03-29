@@ -56,7 +56,7 @@ export const allocateDrivers = async (options?: AllocateDriversOptions) => {
     `Successfully allocated drivers for round ${nextRace.round} to ${playerAllocations.length} players.`,
   );
 
-  sendDiscordNotification(
+  await sendDiscordNotification(
     `Drivers allocated for season ${nextRace.season}, round ${nextRace.round}.`,
   );
 };
