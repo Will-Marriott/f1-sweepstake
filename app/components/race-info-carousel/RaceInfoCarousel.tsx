@@ -43,6 +43,11 @@ export default function RaceInfoCarousel({
   const rafRef = useRef<number | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [hasOverflow, setHasOverflow] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const updateActiveIndex = useCallback(() => {
     const container = containerRef.current;
@@ -137,11 +142,13 @@ export default function RaceInfoCarousel({
               <p className="text-xl font-bold text-red-600">
                 {session.label.toUpperCase()}
               </p>
-              {formatted ? (
+              {formatted && mounted ? (
                 <>
                   <p className="text-sm mt-2">{formatted.date}</p>
                   <p className="text-sm">{formatted.time}</p>
                 </>
+              ) : formatted && !mounted ? (
+                <p className="text-sm mt-2 text-foreground/60">Loading…</p>
               ) : (
                 <p className="text-sm mt-2 text-foreground/60">Time TBC</p>
               )}

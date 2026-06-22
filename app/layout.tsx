@@ -5,6 +5,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "F1 Sweepstake",
   description: "F1 Sweepstake Tracker",
+  icons: {},
 };
 
 const orbitron = Orbitron({
