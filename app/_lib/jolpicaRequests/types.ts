@@ -37,6 +37,8 @@ export type Race = {
   SecondPractice?: Session;
   ThirdPractice?: Session;
   Qualifying?: Session;
+  Sprint?: Session;
+  SprintQualifying?: Session;
 };
 
 export type Circuit = {
