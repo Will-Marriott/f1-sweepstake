@@ -21,9 +21,14 @@ async function DriverAllocationTable() {
     })
     .sort((a, b) => a.playerName!.localeCompare(b.playerName!));
 
+  const subtitle = raceWeek
+    ? `Round ${raceWeek.round}${raceWeek.raceName ? ` - ${raceWeek.raceName}` : ""}`
+    : undefined;
+
   return (
     <Table
       title="Drivers"
+      subtitle={subtitle}
       tableData={allocationTableData || []}
       columns={[
         { key: "playerName", label: "Player" },

@@ -42,6 +42,7 @@ export const allocateDrivers = async (options?: AllocateDriversOptions) => {
     sweepstakeGame.id,
     nextRace.round,
     nextRace.circuitId,
+    nextRace.raceName,
   );
 
   const playerAllocations = assignDriversToPlayers(
@@ -65,6 +66,7 @@ const findOrCreateRaceWeek = async (
   sweepstakeGameId: number,
   round: number,
   circuitId: string,
+  raceName: string,
 ) => {
   const existingRaceWeek = await prisma.raceWeek.findFirst({
     where: { sweepstakeGameId, round },
@@ -80,6 +82,12 @@ const findOrCreateRaceWeek = async (
         `Cleared ${existingRaceWeek.raceWeekAllocations.length} existing allocations for round ${round}.`,
       );
     }
+    if (existingRaceWeek.raceName !== raceName) {
+      await prisma.raceWeek.update({
+        where: { id: existingRaceWeek.id },
+        data: { raceName },
+      });
+    }
     return existingRaceWeek;
   }
 
@@ -88,6 +96,7 @@ const findOrCreateRaceWeek = async (
       sweepstakeGameId,
       round,
       circuitId,
+      raceName,
     },
   });
 };
@@ -265,6 +274,7 @@ const getNextRace = async (overrideSeason?: number, overrideRound?: number) => {
   const season = parseInt(nextRace.season);
   const round = parseInt(nextRace.round);
   const circuitId = nextRace.Circuit.circuitId;
+  const raceName = nextRace.raceName;
 
   if (isNaN(season)) {
     throw new Error("Invalid season information in the next race data.");
@@ -274,5 +284,5 @@ const getNextRace = async (overrideSeason?: number, overrideRound?: number) => {
     throw new Error("Invalid round information in the next race data.");
   }
 
-  return { season, round, circuitId };
+  return { season, round, circuitId, raceName };
 };

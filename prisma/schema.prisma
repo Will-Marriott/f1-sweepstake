@@ -43,6 +43,7 @@ model RaceWeek {
   sweepstakeGameId Int
   round Int
   circuitId String
+  raceName String @default("")
   isProcessed Boolean @default(false)
   raceWeekAllocations RaceWeekAllocation[]
 }
