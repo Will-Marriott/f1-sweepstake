@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# F1 Sweepstake
+
+A web app for tracking an F1 sweepstake — allocate drivers to participants and track leaderboard progress throughout the season.
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router)
+- **Database:** SQLite via Prisma (with Better-SQLite3)
+- **Styling:** Tailwind CSS v4
+- **Testing:** Vitest
+- **Data Source:** [Jolpica F1 API](https://github.com/jolpica/jolpica-f1) (CC BY-NC-SA 4.0)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20+
+- pnpm
+
+### Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm prisma:generate
+pnpm prisma:migrate
+pnpm prisma:seed
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Run
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+### Test
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm test
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment Variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Variable | Required | Default | Description |
+|---|---|---|---|
+| `DATABASE_URL` | No | `file:./dev.db` | SQLite database path |
+| `DISCORD_WEBHOOK_URL` | No | — | Discord webhook for notifications |
 
-## Deploy on Vercel
+Copy `.env.example` to `.env` and configure as needed. All variables have sensible defaults or graceful fallbacks.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Data Attribution
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project uses the [Jolpica F1 API](https://github.com/jolpica/jolpica-f1) for Formula 1 data. Jolpica data is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
