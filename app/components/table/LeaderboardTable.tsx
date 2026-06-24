@@ -17,14 +17,18 @@ async function LeaderboardTable() {
     .sort((a, b) => b.points - a.points);
 
   return (
-    <Table
-      title="Leaderboard"
-      tableData={leaderboardData}
-      columns={[
-        { key: "playerName", label: "Player" },
-        { key: "points", label: "Points" },
-      ]}
-    />
+    <>
+      <div className="flex items-center justify-center mb-2">
+        <h2 className="text-lg font-bold">Leaderboard</h2>
+      </div>
+      <Table
+        tableData={leaderboardData}
+        columns={[
+          { key: "playerName", label: "Player" },
+          { key: "points", label: "Points" },
+        ]}
+      />
+    </>
   );
 }
 

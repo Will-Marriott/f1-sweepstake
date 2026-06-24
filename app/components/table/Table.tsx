@@ -1,30 +1,29 @@
-type Table<T> = {
+type TableColumn<T> = {
   key: keyof T;
   label: string;
+  className?: string;
 };
 
 function Table<T extends object>({
   tableData,
   columns,
-  title,
-  subtitle,
 }: {
   tableData: T[];
-  columns: Table<T>[];
-  title?: string;
-  subtitle?: string;
+  columns: TableColumn<T>[];
 }) {
   if (tableData.length === 0) return <div>No data</div>;
 
   return (
     <div className="w-full h-fit">
-      {title && <h2 className="font-bold">{title}</h2>}
-      {subtitle && <p className="text-sm text-gray-500 mb-2">{subtitle}</p>}
-      <table className="w-full">
+      <table className="w-full table-fixed">
         <thead>
           <tr>
             {columns.map((col) => (
-              <th key={String(col.key)} scope="col" className="text-left">
+              <th
+                key={String(col.key)}
+                scope="col"
+                className={`text-left ${col.className ?? ""}`}
+              >
                 {col.label}
               </th>
             ))}
@@ -34,7 +33,9 @@ function Table<T extends object>({
           {tableData.map((row, i) => (
             <tr key={i}>
               {columns.map((col) => (
-                <td key={String(col.key)}>{String(row[col.key])}</td>
+                <td key={String(col.key)} className={col.className ?? ""}>
+                  {String(row[col.key])}
+                </td>
               ))}
             </tr>
           ))}
